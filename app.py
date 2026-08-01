@@ -6,26 +6,25 @@ from PIL import Image
 import requests
 from streamlit_lottie import st_lottie
 
-# --- PAGE CONFIGURATION ---
+
 st.set_page_config(
     page_title="Nishad Raut | Portfolio",
     page_icon="💻",
     layout="wide",
 )
 
-# --- ASSETS & ANIMATIONS ---
 def load_lottieurl(url):
     r = requests.get(url)
     if r.status_code != 200:
         return None
     return r.json()
 
-# Load specific animations (You can change these URLs to any Lottie file you like)
+
 lottie_coding = load_lottieurl("https://lottie.host/5a919e31-5026-47b2-8419-756180352b27/6L8B3hBwR1.json") # Coding animation
 lottie_contact = load_lottieurl("https://assets9.lottiefiles.com/packages/lf20_u25cckyh.json") # Contact animation
 lottie_ai = load_lottieurl("https://lottie.host/955e81b6-7649-43c9-9403-120005d5193d/L0L8Z3xXy8.json") # AI Brain
 
-# --- CUSTOM CSS ---
+
 st.markdown("""
 <style>
     /* Remove default padding */
@@ -57,14 +56,14 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- SIDEBAR NAVIGATION ---
+
 with st.sidebar:
-    # Try to load profile pic, handle error if missing
+ 
     try:
         img = Image.open("assets/profile-pic.png")
         st.image(img, width=150)
     except:
-        st.write("📷") # Fallback icon
+        st.write("📷") 
 
     st.title("Nishad Atul Raut")
     st.write("📍 Kalyan, India")
@@ -93,9 +92,9 @@ with st.sidebar:
     except:
         st.warning("⚠️ Resume file missing")
 
-# --- HOME SECTION ---
+
 if selected == "Home":
-    col1, col2 = st.columns([1.5, 1]) # Adjust column ratio
+    col1, col2 = st.columns([1.5, 1]) 
     
     with col1:
         st.title("Hello, I'm Nishad! 👋")
@@ -109,7 +108,7 @@ if selected == "Home":
         )
         st.info("🚀 **Objective:** To leverage AI & Python to solve real-world problems.")
         
-        # Social Links (Interactive)
+       
         st.markdown("""
         <a href="https://linkedin.com" target="_blank">LinkedIn</a> | 
         <a href="https://github.com/Nishadraut21" target="_blank">GitHub</a> | 
@@ -117,10 +116,9 @@ if selected == "Home":
         """, unsafe_allow_html=True)
 
     with col2:
-        # ANIMATION HERE
         st_lottie(lottie_coding, height=300, key="coding")
 
-# --- EXPERIENCE SECTION ---
+
 if selected == "Experience":
     st.header("⏳ Professional Journey")
     
@@ -130,7 +128,7 @@ if selected == "Experience":
     ]
     df = pd.DataFrame(data)
     
-    # Improved Chart
+   
     fig = px.timeline(df, x_start="Start", x_end="End", y="Company", color="Role", hover_data=["Description"], title="Internship Timeline")
     fig.update_yaxes(autorange="reversed")
     fig.update_layout(xaxis_title="Date", height=300)
@@ -138,11 +136,11 @@ if selected == "Experience":
     
     st.write("### 📌 Detailed Roles")
     for index, row in df.iterrows():
-        with st.expander(f"{row['Role']} @ {row['Company']}", expanded=True): # Expanded by default looks better
+        with st.expander(f"{row['Role']} @ {row['Company']}", expanded=True):
             st.write(f"📅 **{row['Start']} - {row['End']}**")
             st.write(f"💡 {row['Description']}")
 
-# --- PROJECTS SECTION ---
+
 if selected == "Projects":
     st.header("💻 Featured Projects")
     
@@ -163,7 +161,7 @@ if selected == "Projects":
         st.latex(r'''P_{ij}(t) = \frac{[\tau_{ij}(t)]^\alpha \cdot [\eta_{ij}]^\beta}{\sum [\tau_{ik}(t)]^\alpha \cdot [\eta_{ik}]^\beta}''')
         st_lottie(lottie_ai, height=200, key="ai")
 
-# --- SKILLS SECTION ---
+
 if selected == "Skills":
     st.header("🛠 Technical Stack")
     
@@ -187,7 +185,7 @@ if selected == "Skills":
     st.write("---")
     st.write("Also proficient in: **Git, HTML/CSS, WordPress, C#**")
 
-# --- CONTACT SECTION ---
+
 if selected == "Contact":
     st.header("📬 Get In Touch")
     
